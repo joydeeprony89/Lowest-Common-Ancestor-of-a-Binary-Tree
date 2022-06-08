@@ -38,12 +38,18 @@ namespace Lowest_Common_Ancestor_of_a_Binary_Tree
     }
     public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
     {
-      if (root == null || root.val == p.val || root.val == q.val) return root;
+      // if root is null or if any of the p or q value same as root, return the root
+      // Why ? because root is the common ancestor of any node, and when we had asked root and another node LCA in that case definetly root would be the LCA as an answer.
+      if (root == null || p.val == root.val || q.val == root.val) return root;
+      // Search the left subtree, as both the nodes can be found in left side.
       var left = LowestCommonAncestor(root.left, p, q);
+      // Search the right subtree, as both the nodes can be found in right side.
       var right = LowestCommonAncestor(root.right, p, q);
-      if (left == null && right == null) return null;
+
+      // When we have found both the left common ancestor and right common ancestor, then the answer is root
       if (left != null && right != null) return root;
-      return left ?? right;
+      // When any one of is null the answer would be another not null node
+      return left == null ? right : left;
     }
   }
 }
